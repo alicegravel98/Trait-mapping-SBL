@@ -1,4 +1,4 @@
-### Mapping traits and uncertainties1 
+### Mapping traits and uncertainties 
 
 ## Load libraries----
 library(raster)
