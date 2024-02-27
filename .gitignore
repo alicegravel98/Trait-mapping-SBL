@@ -47,3 +47,20 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Ignore these files
+*.csv
+*.txt
+*.xlsx
+*.docx
+trait_data/
+output_topography/
+output_spectra/
+output_plsr/
+output_allpixels/
+mapping/
+input_data/
+inference/
+
+
+
