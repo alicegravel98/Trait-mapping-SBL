@@ -81,7 +81,7 @@ df_nitrogen <- list_dataframes[["nitrogen"]] %>%
   filter_all(all_vars(. >= 0))
 
 ## Define range trait----
-# [traitmin - | traitmin | ✕ 25%, traitmax - | traitmax | ✕ 25%]
+# [traitmin - | traitmin | ✕ 25%, traitmax +| traitmax | ✕ 25%]
 # Create a list of all traits
 traits <- list(
   list(trait = "SLA", min = 2.31, max = 20.05),
@@ -106,9 +106,15 @@ result_range <- data.frame(trait = character(), perc_in_range = numeric())
 # Loop for all traits
 for (trait_info in traits) {
   trait_df <- get(paste0("df_", trait_info$trait))  
-  in_range <- which(trait_df[[trait_info$trait]] >= trait_info$min & 
-                      trait_df[[trait_info$trait]] <= trait_info$max)
+  
+  min_threshold <- trait_info$min - 0.25 * abs(trait_info$min)
+  max_threshold <- trait_info$max + 0.25 * abs(trait_info$max)
+  
+  in_range <- which(trait_df[[trait_info$trait]] >= min_threshold & 
+                      trait_df[[trait_info$trait]] <= max_threshold)
+  
   percentage_in_range <- 100 * length(in_range) / nrow(trait_df)
+  
   result_range <- rbind(result_range, data.frame(trait = trait_info$trait, perc_in_range = percentage_in_range))
 }
 
